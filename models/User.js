@@ -13,26 +13,31 @@ const UserSchema = new Schema({
         unique: true,
         //must match
     },
-    // thoughts: [
-    //     {
-    //         type: Schema.Types.ObjectId,
-    //         ref: 'Thoughts'
-    //     }
-    // ],
-    // friends: {
-
-    // }
+    thoughts: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Thoughts'
+        }
+    ],
+    friends: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'User'
+        }
+    ]
 },
     {
         toJSON: {
             virtuals: true,
-        }
+            getters: true
+        },
+        id: false
     }
 );
 
-UserSchema.virtual('friendCount').get(function () {
-    return this.friends.reduce((total, friend)=> total + friend.length + 1, 0); 
-});
+// UserSchema.virtual('friendCount').get(function () {
+//     return this.friends.length;
+// });
 
 const User = model('User', UserSchema)
 
