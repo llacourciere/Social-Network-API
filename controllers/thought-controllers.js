@@ -9,7 +9,19 @@ const thoughtController = {
                 res.status(400).json(err);
             })
     },
-    getThoughtById(){},
+    getThoughtById({ params }, res) {
+        Thoughts.findOne({ _id: params.id })
+            .then(dbThoughtData => {
+                if (!dbThoughtData) {
+                    res.status(404).json({ message: 'No Thought found with this id' });
+                }
+                res.json(dbThoughtData)
+            })
+            .catch(err => {
+                console.log(err);
+                res.status(400).json(err);
+            })
+    },
     createThought({ params, body }, res){
         Thoughts.create(body)
             .then(({ _id })=> {
@@ -29,8 +41,28 @@ const thoughtController = {
         })
         .catch(err => res.status(400).json(err));
     },
-    updateThought(){},
-    deleteThought() {}
+    updateThought({ params, body }, res){
+        Thoughts.findOneAndUpdate({ _id: params.id }, body, { new: true })
+            .then(dbThoughtData => {
+                if (!dbThoughtData) {
+                    res.status(404).json({ message: 'No thought found with this id!'});
+                    return; 
+                }
+                res.json(dbThoughtData)
+            })
+            .catch(err => res.status(400).json(err));
+    },
+    deleteThought({ params }, res) {
+        Thoughts.findByIdAndDelete({ _id: params.id })
+            .then(dbThoughtData => {
+                if (!dbThoughtData) {
+                    res.status(404).json({ message: 'No Thought found with this id!' });
+                    return;
+                }
+                res.json(dbThoughtData);
+            })
+            .catch(err => res.status(400).json(err));
+    }
 }
 
 module.exports = thoughtController;
