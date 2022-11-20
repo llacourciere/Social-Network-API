@@ -1,5 +1,5 @@
-const { Schema, model, Types, trusted} = require('mongoose');
-const { compareAsc, format } = require('date-fns');
+const { Schema, model, Types} = require('mongoose');
+const { format } = require('date-fns');
 
 const ReactionSchema = new Schema(
     {
@@ -10,8 +10,11 @@ const ReactionSchema = new Schema(
         reactionBody: {
             type: String,
             required: true,
-            trim: true,
             maxLength: 280
+        },
+        username: {
+            type: String,
+            required: true
         },
         createdAt: {
             type: Date,
@@ -21,6 +24,7 @@ const ReactionSchema = new Schema(
     },
     {
         toJSON: {
+            virtuals: true,
             getters: true
         }
     }
@@ -40,7 +44,8 @@ const ThoughtSchema = new Schema(
         },
         username: {
             type: String, 
-            required: true
+            required: true,
+            ref: 'User'
         },
         reactions: [ReactionSchema]
     },
@@ -57,6 +62,6 @@ ReactionSchema.virtual('reactionCount').get(function () {
     return this.reactions.length;
 });
 
-const Thoughts = model('Thoughts', ThoughtSchema);
+const Thought = model('Thought', ThoughtSchema);
 
-module.exports = Thoughts;
+module.exports = Thought;
