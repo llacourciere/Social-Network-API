@@ -1,4 +1,5 @@
 const { Schema, model, Types, trusted} = require('mongoose');
+const { compareAsc, format } = require('date-fns');
 
 const ReactionSchema = new Schema(
     {
@@ -18,7 +19,8 @@ const ReactionSchema = new Schema(
         },
         createdAt: {
             type: Date,
-            default: Date.now
+            default: Date.now,
+            get: (createdAtVal) => format(new Date(createdAtVal), 'MM-dd-yyyy')
         }
     },
     {
@@ -37,7 +39,8 @@ const ThoughtSchema = new Schema(
         },
         createdAt : {
             type: Date, 
-            default: Date.now
+            default: Date.now,
+            get: (createdAtVal) => format(new Date(createdAtVal), 'MM-dd-yyyy')
         },
         username: {
             type: String, 
@@ -47,7 +50,8 @@ const ThoughtSchema = new Schema(
     },
     {
         toJSON: {
-            virtuals: true
+            virtuals: true,
+            getters: true
         },
         id: false
     }
