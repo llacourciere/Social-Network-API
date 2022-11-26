@@ -2,13 +2,13 @@ const { User, Thought } = require('../models');
 
 const thoughtController = {
     getAllThoughts(req, res) {
-        Thought.find({})
-            .select('-__v')
+        Thought.find()
+           // .select('-__v')
             .then(dbThoughtData => res.json(dbThoughtData))
-            .catch(err => {
-                console.log(err);
-                res.status(400).json(err);
-            })
+            // .catch(err => {
+            //     console.log(err);
+            //     res.status(400).json(err);
+            // })
     },
     getThoughtById({ params }, res) {
         Thought.findOne({ _id: params.id })
@@ -72,7 +72,7 @@ const thoughtController = {
     addReaction({ params, body }, res) {
         Thought.findOneAndUpdate(
             { _id: params.thoughtId },
-            { $push: { reactions: body } },
+            { $addToSet: { reactions: body } },
             { new: true, runValidators: true }
         )
             .then(dbThoughtData => {
