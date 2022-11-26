@@ -28,6 +28,9 @@ This project is a back end project used to enter user and thought information in
 
 [Untitled_ Nov 21, 2022 6_39 PM.webm](https://user-images.githubusercontent.com/108777796/203208966-696b2647-46db-4994-8338-995340c67d86.webm)
 
+[Untitled_ Nov 25 2022 6_04 PM.webm](https://user-images.githubusercontent.com/108777796/204068204-20732425-7094-49d5-b85f-2a978b3580e1.webm)
+
+
 ## Tests 
 None
 
